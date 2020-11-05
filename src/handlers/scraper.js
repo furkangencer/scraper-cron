@@ -34,11 +34,11 @@ const retrieveItemsFromS3Bucket = async (key) => {
   };
   const S3Object = await s3.getObject(params).promise().catch(e => []);
   if(S3Object && S3Object.Body) {
-    console.log("EXISTS IN BUCKET!");
+    // console.log("EXISTS IN BUCKET!");
     items = JSON.parse(Buffer.from(S3Object.Body).toString("utf8"));
   } else {
-    console.log("NEW BUCKET CREATED!");
-    items = await import('../../items.json');
+    // console.log("NEW BUCKET CREATED!");
+    items = await require('../../items.json');
 
     await uploadFileToS3('items-to-scrape.json', JSON.stringify(items));
   }
@@ -55,7 +55,7 @@ const uploadFileToS3 = async (key, body) => {
 };
 
 const checkItem = async (page, item) => {
-  console.log(`Checking ${item.name}`);
+  // console.log(`Checking ${item.name}`);
   await page.goto(item.url);
 
   const canAdd = await page.$(item.pattern);
@@ -104,7 +104,7 @@ export const handler = async (event) => {
         //console.log("item", item)
         const available = await checkItem(page, item);
         if (available) {
-          console.log(`${item.name} is available.`);
+          // console.log(`${item.name} is available.`);
 
           await sendMail({
             subject: 'Scraper Notification',
@@ -112,7 +112,7 @@ export const handler = async (event) => {
             recipient: process.env.SES_SENDER,
           });
         } else {
-          console.log(`${item.name} is not available.`);
+          // console.log(`${item.name} is not available.`);
         }
       }
     }
