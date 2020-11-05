@@ -26,7 +26,7 @@ functions:
     handler: src/handlers/scraper.handler
     timeout: 60
     events:
-      - schedule: rate(5 minute)
+      - schedule: rate(5 minutes)
 
 custom:
   ItemsToScrapeBucket:
