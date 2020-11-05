@@ -1,0 +1,37 @@
+service:
+  name: scraper-cron
+
+plugins:
+  - serverless-bundle
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  memorySize: 1024
+  region: eu-central-1
+  stage: ${opt:stage, 'dev'}
+  environment:
+    ITEMS_TO_SCRAPE_BUCKET_NAME: ${self:custom.ItemsToScrapeBucket.name}
+    SES_SENDER: ${file(ses_sender.txt)}
+  iamRoleStatements:
+    - ${file(iam/SendMailIAM.yml):SendMailIAM}
+    - ${file(iam/ItemsToScrapeBucketIAM.yml):ItemsToScrapeBucketIAM}
+
+resources:
+  Resources:
+    ItemsToScrapeBucket: ${file(resources/ItemsToScrapeBucket.yml):ItemsToScrapeBucket}
+
+functions:
+  scraper:
+    handler: src/handlers/scraper.handler
+    timeout: 60
+    events:
+      - schedule: rate(5 minute)
+
+custom:
+  ItemsToScrapeBucket:
+    name: items-to-scrape-bucket-023hf6d-${self:provider.stage}
+  bundle:
+    linting: false
+    externals: # Set non Webpack compatible packages as externals
+      - chrome-aws-lambda

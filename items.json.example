@@ -1,0 +1,7 @@
+[
+  {
+    "name": "ITEM_NAME",
+    "url": "ITEM_URL",
+    "pattern": "#THE_PATTERN_TO_SCRAPE"
+  }
+]
