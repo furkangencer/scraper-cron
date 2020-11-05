@@ -1,0 +1,24 @@
+{
+  "name": "scraper-cron",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "scraper",
+    "serverless"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.778.0",
+    "chrome-aws-lambda": "^5.3.1",
+    "puppeteer-core": "^5.3.1",
+    "serverless-bundle": "^3.2.1"
+  },
+  "devDependencies": {
+    "serverless-pseudo-parameters": "^2.5.0"
+  }
+}
