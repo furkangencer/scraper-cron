@@ -115,6 +115,8 @@ export const handler = async (event) => {
           // console.log(`${item.name} is not available.`);
         }
       }
+
+      await browser.close();
     }
 
     return {
